@@ -126,7 +126,7 @@ def nec():
 # Main program
 def get_user_input():
     while True:
-        user_input = input("Enter a command or 'q' to exit: ")
+        user_input = input("Type './todo help' to see commands, Enter a command or 'q' to exit: ")
         if user_input.lower() == 'q':
             sys.exit()  # Kilépés a programból
         args = user_input.split()
@@ -158,7 +158,7 @@ if __name__ == '__main__':
         else:
             globals()[args[1]](*args[2:])
 
-        input("Press Enter to exit...")
+        input("\nPress Enter to exit...")
 
     except Exception as e:
         s = """Usage :-
