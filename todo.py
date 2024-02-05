@@ -1,33 +1,38 @@
 import sys
 import datetime
 
-# help function
+# Help function
 def help():
     sa = """Usage :-
-$ ./todo add "todo item"  # Add a new todo
-$ ./todo ls               # Show remaining todos
-$ ./todo del NUMBER       # Delete a todo
-$ ./todo done NUMBER      # Complete a todo
-$ ./todo help             # Show usage
-$ ./todo report           # Statistics"""
+$ ./todo add "todo item" [priority]  # Add a new todo with optional priority (default is 1)
+$ ./todo ls                          # Show remaining todos
+$ ./todo del NUMBER                  # Delete a todo
+$ ./todo done NUMBER                 # Complete a todo
+$ ./todo help                        # Show usage
+$ ./todo report                      # Statistics"""
     sys.stdout.buffer.write(sa.encode('utf8'))
 
-# function to add item in todo list
-def add(s):
+# Function to add item in todo list
+def add(s, priority=1):
+    try:
+        priority = int(priority)
+        if priority < 1 or priority > 3:
+            raise ValueError("Priority should be between 1 and 3.")
+    except ValueError as e:
+        print(f"Error: {e}")
+        return
 
     f = open('todo.txt', 'a')
-    f.write(s)
+    st = f"{s} | Priority: {priority}"
+    f.write(st)
     f.write("\n")
     f.close()
-    s = '"'+s+'"'
-    print(f"Added todo: {s}")
-
+    s = '"' + s + '"'
+    print(f"Added todo: {s} with Priority: {priority}")
 
 # Function to print the todo list items
 def ls():
-
     try:
-
         nec()
         l = len(d)
         k = l
@@ -40,15 +45,13 @@ def ls():
     except Exception as e:
         raise e
 
-
 # Function to complete a todo
 def done(no):
     try:
-
         nec()
         no = int(no)
         f = open('done.txt', 'a')
-        st = 'x ' +str(datetime.datetime.today()).split()[0]+' '+d[no]
+        st = 'x ' + str(datetime.datetime.today()).split()[0] + ' ' + d[no]
 
         f.write(st)
         f.write("\n")
@@ -70,7 +73,6 @@ def done(no):
 def report():
     nec()
     try:
-
         nf = open('done.txt', 'r')
         c = 1
 
@@ -78,12 +80,10 @@ def report():
             line = line.strip('\n')
             don.update({c: line})
             c = c + 1
-        print(
-            f'{str(datetime.datetime.today()).split()[0]} Pending : {len(d)} Completed : {len(don)}')
+        print(f'{str(datetime.datetime.today()).split()[0]} Pending : {len(d)} Completed : {len(don)}')
 
     except:
-        print(
-            f'{str(datetime.datetime.today()).split()[0]} Pending : {len(d)} Completed : {len(don)}')
+        print(f'{str(datetime.datetime.today()).split()[0]} Pending : {len(d)} Completed : {len(don)}')
 
 # Function to delete a todo
 def deL(no):
@@ -91,7 +91,7 @@ def deL(no):
         no = int(no)
         nec()
 
-        # utility function defined in main
+        # Utility function defined in main
         with open("todo.txt", "r+") as f:
             lines = f.readlines()
             f.seek(0)
@@ -103,14 +103,10 @@ def deL(no):
         print(f"Deleted todo #{no}")
 
     except Exception as e:
-
         print(f"Error: todo #{no} does not exist. Nothing deleted.")
 
-
-# code
+# Utility function used in done and report function
 def nec():
- 
-  # utility function used in done and report function
     try:
         f = open('todo.txt', 'r')
         c = 1
@@ -150,7 +146,10 @@ if __name__ == '__main__':
             elif args[0] == 'q':
                 sys.exit()  # Exit the program
             else:
-                globals()[args[0]](*args[1:])
+                if args[0] == 'add':
+                    add(*args[1:])
+                else:
+                    globals()[args[0]](*args[1:])
 
     except KeyboardInterrupt:
         print("\nExiting...")
