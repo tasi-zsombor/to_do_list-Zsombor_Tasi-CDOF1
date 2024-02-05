@@ -3,15 +3,8 @@
 Console-based application that helps you keep track of the tasks you need to do. It can perform the following functions: 
 * add and delete tasks
 * listing tasks
-* tasks have two statuses: todo and done. 
+* tasks have two statuses: todo and done.
 
-<<<<<<< HEAD
-A console based application to help keep track of tasks. You should be able to add, delete, complete tasks.
-Konzol alapú alkalmazás, amely segít nyomon követni a feladatokat. A következő funkciókat tudja ellátni: 
-- feladatok hozzáadása, törlése
-- feladatok listázása
-- feladatoknak két állapota van: todo és done. Amikor hozáadtuk a feladatot, az a todo listába kerül. Amiután elvégeztük és beállítottuk
-=======
 When a task is added, it is added to the todo.txt.  After it is done, it is in the done.txt.
 
 ## Getting Started
